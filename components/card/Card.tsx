@@ -9,7 +9,7 @@ export const Card = ({ title, image, description, id }: Product) => {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link
-        href={`/${pathname}/${id}`}
+        href={`${pathname}${id}`}
         className="block w-full h-[200px] relative"
       >
         <Image src={image} alt="product image" fill />

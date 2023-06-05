@@ -1,6 +1,7 @@
 import { Card } from "@/components/card/Card";
 import { Product } from "@/types/product";
 import { InferGetServerSidePropsType } from "next";
+import { NextSeo } from "next-seo";
 import React from "react";
 
 export const getServerSideProps = async () => {
@@ -34,6 +35,11 @@ const SsrPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
+      <NextSeo
+        title="Server Side Rendering"
+        description="Strona które renderuje dane po stronie serwera"
+        // itd...
+      />
       <h1 className="font-bold text-primary text-3xl py-6">
         Server Side Rendering
       </h1>

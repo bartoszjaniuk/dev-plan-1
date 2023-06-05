@@ -15,26 +15,493 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  /** A date string, such as 2007-12-03 (YYYY-MM-DD), compliant with ISO 8601 standard for representation of dates using the Gregorian calendar. */
   Date: { input: any; output: any; }
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the date-timeformat outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representationof dates and times using the Gregorian calendar. */
   DateTime: { input: any; output: any; }
   Hex: { input: any; output: any; }
-  /** Raw JSON value */
   Json: { input: any; output: any; }
-  /** The Long scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
   Long: { input: any; output: any; }
   RGBAHue: { input: any; output: any; }
   RGBATransparency: { input: any; output: any; }
-  /** Slate-compatible RichText AST */
   RichTextAST: { input: any; output: any; }
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any; }
 };
 
 export type Aggregate = {
   __typename?: 'Aggregate';
   count: Scalars['Int']['output'];
+};
+
+export type AppUser = Node & {
+  __typename?: 'AppUser';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<AppUser>;
+  email: Scalars['String']['output'];
+  /** List of AppUser versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID']['output'];
+  password: Scalars['String']['output'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime']['output'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+};
+
+
+export type AppUserCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type AppUserDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean']['input'];
+  inheritLocale?: Scalars['Boolean']['input'];
+  stages?: Array<Stage>;
+};
+
+
+export type AppUserHistoryArgs = {
+  limit?: Scalars['Int']['input'];
+  skip?: Scalars['Int']['input'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type AppUserPublishedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type AppUserScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+export type AppUserUpdatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type AppUserConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: AppUserWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type AppUserConnection = {
+  __typename?: 'AppUserConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<AppUserEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type AppUserCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type AppUserCreateManyInlineInput = {
+  /** Connect multiple existing AppUser documents */
+  connect?: InputMaybe<Array<AppUserWhereUniqueInput>>;
+  /** Create and connect multiple existing AppUser documents */
+  create?: InputMaybe<Array<AppUserCreateInput>>;
+};
+
+export type AppUserCreateOneInlineInput = {
+  /** Connect one existing AppUser document */
+  connect?: InputMaybe<AppUserWhereUniqueInput>;
+  /** Create and connect one AppUser document */
+  create?: InputMaybe<AppUserCreateInput>;
+};
+
+/** An edge in a connection. */
+export type AppUserEdge = {
+  __typename?: 'AppUserEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: AppUser;
+};
+
+/** Identifies documents */
+export type AppUserManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<AppUserWhereStageInput>;
+  documentInStages_none?: InputMaybe<AppUserWhereStageInput>;
+  documentInStages_some?: InputMaybe<AppUserWhereStageInput>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  email_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  email_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  email_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  email_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  email_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  email_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  email_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  email_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  email_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  password_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  password_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  password_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  password_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  password_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  password_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  password_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  password_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  password_starts_with?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+export enum AppUserOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  EmailAsc = 'email_ASC',
+  EmailDesc = 'email_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PasswordAsc = 'password_ASC',
+  PasswordDesc = 'password_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
+export type AppUserUpdateInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AppUserUpdateManyInlineInput = {
+  /** Connect multiple existing AppUser documents */
+  connect?: InputMaybe<Array<AppUserConnectInput>>;
+  /** Create and connect multiple AppUser documents */
+  create?: InputMaybe<Array<AppUserCreateInput>>;
+  /** Delete multiple AppUser documents */
+  delete?: InputMaybe<Array<AppUserWhereUniqueInput>>;
+  /** Disconnect multiple AppUser documents */
+  disconnect?: InputMaybe<Array<AppUserWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing AppUser documents */
+  set?: InputMaybe<Array<AppUserWhereUniqueInput>>;
+  /** Update multiple AppUser documents */
+  update?: InputMaybe<Array<AppUserUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple AppUser documents */
+  upsert?: InputMaybe<Array<AppUserUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type AppUserUpdateManyInput = {
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AppUserUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: AppUserUpdateManyInput;
+  /** Document search */
+  where: AppUserWhereInput;
+};
+
+export type AppUserUpdateOneInlineInput = {
+  /** Connect existing AppUser document */
+  connect?: InputMaybe<AppUserWhereUniqueInput>;
+  /** Create and connect one AppUser document */
+  create?: InputMaybe<AppUserCreateInput>;
+  /** Delete currently connected AppUser document */
+  delete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Disconnect currently connected AppUser document */
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Update single AppUser document */
+  update?: InputMaybe<AppUserUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single AppUser document */
+  upsert?: InputMaybe<AppUserUpsertWithNestedWhereUniqueInput>;
+};
+
+export type AppUserUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: AppUserUpdateInput;
+  /** Unique document search */
+  where: AppUserWhereUniqueInput;
+};
+
+export type AppUserUpsertInput = {
+  /** Create document if it didn't exist */
+  create: AppUserCreateInput;
+  /** Update document if it exists */
+  update: AppUserUpdateInput;
+};
+
+export type AppUserUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: AppUserUpsertInput;
+  /** Unique document search */
+  where: AppUserWhereUniqueInput;
+};
+
+/** This contains a set of filters that can be used to compare values internally */
+export type AppUserWhereComparatorInput = {
+  /** This field can be used to request to check if the entry is outdated by internal comparison */
+  outdated_to?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Identifies documents */
+export type AppUserWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AppUserWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  documentInStages_every?: InputMaybe<AppUserWhereStageInput>;
+  documentInStages_none?: InputMaybe<AppUserWhereStageInput>;
+  documentInStages_some?: InputMaybe<AppUserWhereStageInput>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  email_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  email_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  email_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  email_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  email_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  email_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  email_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  email_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  email_starts_with?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  id_not?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']['input']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** All values containing the given string. */
+  password_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values ending with the given string. */
+  password_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are contained in given list. */
+  password_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Any other value that exists and is not equal to the given value. */
+  password_not?: InputMaybe<Scalars['String']['input']>;
+  /** All values not containing the given string. */
+  password_not_contains?: InputMaybe<Scalars['String']['input']>;
+  /** All values not ending with the given string */
+  password_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values that are not contained in given list. */
+  password_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** All values not starting with the given string. */
+  password_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  /** All values starting with the given string. */
+  password_starts_with?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  /** Any other value that exists and is not equal to the given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']['input']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+};
+
+/** The document in stages filter allows specifying a stage entry to cross compare the same document between different stages */
+export type AppUserWhereStageInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<AppUserWhereStageInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<AppUserWhereStageInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<AppUserWhereStageInput>>;
+  /** This field contains fields which can be set as true or false to specify an internal comparison */
+  compareWithParent?: InputMaybe<AppUserWhereComparatorInput>;
+  /** Specify the stage to compare with */
+  stage?: InputMaybe<Stage>;
+};
+
+/** References AppUser record uniquely */
+export type AppUserWhereUniqueInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Asset system model */
@@ -700,46 +1167,6 @@ export type BatchPayload = {
   count: Scalars['Long']['output'];
 };
 
-export enum CacheControlScope {
-  Private = 'PRIVATE',
-  Public = 'PUBLIC'
-}
-
-export type Character = {
-  __typename?: 'Character';
-  /** Time at which the character was created in the database. */
-  created?: Maybe<Scalars['String']['output']>;
-  /** Episodes in which this character appeared. */
-  episode: Array<Maybe<Episode>>;
-  /** The gender of the character ('Female', 'Male', 'Genderless' or 'unknown'). */
-  gender?: Maybe<Scalars['String']['output']>;
-  /** The id of the character. */
-  id?: Maybe<Scalars['ID']['output']>;
-  /**
-   * Link to the character's image.
-   * All images are 300x300px and most are medium shots or portraits since they are intended to be used as avatars.
-   */
-  image?: Maybe<Scalars['String']['output']>;
-  /** The character's last known location */
-  location?: Maybe<Location>;
-  /** The name of the character. */
-  name?: Maybe<Scalars['String']['output']>;
-  /** The character's origin location */
-  origin?: Maybe<Location>;
-  /** The species of the character. */
-  species?: Maybe<Scalars['String']['output']>;
-  /** The status of the character ('Alive', 'Dead' or 'unknown'). */
-  status?: Maybe<Scalars['String']['output']>;
-  /** The type or subspecies of the character. */
-  type?: Maybe<Scalars['String']['output']>;
-};
-
-export type Characters = {
-  __typename?: 'Characters';
-  info?: Maybe<Info>;
-  results?: Maybe<Array<Maybe<Character>>>;
-};
-
 /** Representing a color value comprising of HEX, RGBA and css color values */
 export type Color = {
   __typename?: 'Color';
@@ -1383,47 +1810,6 @@ export type DocumentVersion = {
   stage: Stage;
 };
 
-export type Episode = {
-  __typename?: 'Episode';
-  /** The air date of the episode. */
-  air_date?: Maybe<Scalars['String']['output']>;
-  /** List of characters who have been seen in the episode. */
-  characters: Array<Maybe<Character>>;
-  /** Time at which the episode was created in the database. */
-  created?: Maybe<Scalars['String']['output']>;
-  /** The code of the episode. */
-  episode?: Maybe<Scalars['String']['output']>;
-  /** The id of the episode. */
-  id?: Maybe<Scalars['ID']['output']>;
-  /** The name of the episode. */
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-export type Episodes = {
-  __typename?: 'Episodes';
-  info?: Maybe<Info>;
-  results?: Maybe<Array<Maybe<Episode>>>;
-};
-
-export type FilterCharacter = {
-  gender?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  species?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type FilterEpisode = {
-  episode?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type FilterLocation = {
-  dimension?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
-};
-
 export enum ImageFit {
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
   Clip = 'clip',
@@ -1450,18 +1836,6 @@ export type ImageTransformationInput = {
   resize?: InputMaybe<ImageResizeInput>;
 };
 
-export type Info = {
-  __typename?: 'Info';
-  /** The length of the response. */
-  count?: Maybe<Scalars['Int']['output']>;
-  /** Number of the next page (if it exists) */
-  next?: Maybe<Scalars['Int']['output']>;
-  /** The amount of pages. */
-  pages?: Maybe<Scalars['Int']['output']>;
-  /** Number of the previous page (if it exists) */
-  prev?: Maybe<Scalars['Int']['output']>;
-};
-
 /** Locale system enumeration */
 export enum Locale {
   /** System locale */
@@ -1471,21 +1845,9 @@ export enum Locale {
 /** Representing a geolocation point with latitude and longitude */
 export type Location = {
   __typename?: 'Location';
-  /** Time at which the location was created in the database. */
-  created?: Maybe<Scalars['String']['output']>;
-  /** The dimension in which the location is located. */
-  dimension?: Maybe<Scalars['String']['output']>;
   distance: Scalars['Float']['output'];
-  /** The id of the location. */
-  id?: Maybe<Scalars['ID']['output']>;
   latitude: Scalars['Float']['output'];
   longitude: Scalars['Float']['output'];
-  /** The name of the location. */
-  name?: Maybe<Scalars['String']['output']>;
-  /** List of characters who have been last seen in the location. */
-  residents: Array<Maybe<Character>>;
-  /** The type of the location. */
-  type?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1500,14 +1862,10 @@ export type LocationInput = {
   longitude: Scalars['Float']['input'];
 };
 
-export type Locations = {
-  __typename?: 'Locations';
-  info?: Maybe<Info>;
-  results?: Maybe<Array<Maybe<Location>>>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Create one appUser */
+  createAppUser?: Maybe<AppUser>;
   /**
    * Create one asset
    * @deprecated Asset mutations will be overhauled soon
@@ -1519,10 +1877,19 @@ export type Mutation = {
   createProduct?: Maybe<Product>;
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Delete one appUser from _all_ existing stages. Returns deleted document. */
+  deleteAppUser?: Maybe<AppUser>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
   /** Delete one demoModel from _all_ existing stages. Returns deleted document. */
   deleteDemoModel?: Maybe<DemoModel>;
+  /**
+   * Delete many AppUser documents
+   * @deprecated Please use the new paginated many mutation (deleteManyAppUsersConnection)
+   */
+  deleteManyAppUsers: BatchPayload;
+  /** Delete many AppUser documents, return deleted documents */
+  deleteManyAppUsersConnection: AppUserConnection;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
@@ -1550,10 +1917,19 @@ export type Mutation = {
   deleteScheduledOperation?: Maybe<ScheduledOperation>;
   /** Delete one scheduledRelease from _all_ existing stages. Returns deleted document. */
   deleteScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Publish one appUser */
+  publishAppUser?: Maybe<AppUser>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
   /** Publish one demoModel */
   publishDemoModel?: Maybe<DemoModel>;
+  /**
+   * Publish many AppUser documents
+   * @deprecated Please use the new paginated many mutation (publishManyAppUsersConnection)
+   */
+  publishManyAppUsers: BatchPayload;
+  /** Publish many AppUser documents */
+  publishManyAppUsersConnection: AppUserConnection;
   /**
    * Publish many Asset documents
    * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
@@ -1577,22 +1953,35 @@ export type Mutation = {
   publishManyProductsConnection: ProductConnection;
   /** Publish one product */
   publishProduct?: Maybe<Product>;
+  /** Schedule to publish one appUser */
+  schedulePublishAppUser?: Maybe<AppUser>;
   /** Schedule to publish one asset */
   schedulePublishAsset?: Maybe<Asset>;
   /** Schedule to publish one demoModel */
   schedulePublishDemoModel?: Maybe<DemoModel>;
   /** Schedule to publish one product */
   schedulePublishProduct?: Maybe<Product>;
+  /** Unpublish one appUser from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishAppUser?: Maybe<AppUser>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishAsset?: Maybe<Asset>;
   /** Unpublish one demoModel from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishDemoModel?: Maybe<DemoModel>;
   /** Unpublish one product from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishProduct?: Maybe<Product>;
+  /** Unpublish one appUser from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishAppUser?: Maybe<AppUser>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
   /** Unpublish one demoModel from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishDemoModel?: Maybe<DemoModel>;
+  /**
+   * Unpublish many AppUser documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyAppUsersConnection)
+   */
+  unpublishManyAppUsers: BatchPayload;
+  /** Find many AppUser documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyAppUsersConnection: AppUserConnection;
   /**
    * Unpublish many Asset documents
    * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
@@ -1616,10 +2005,19 @@ export type Mutation = {
   unpublishManyProductsConnection: ProductConnection;
   /** Unpublish one product from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishProduct?: Maybe<Product>;
+  /** Update one appUser */
+  updateAppUser?: Maybe<AppUser>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
   /** Update one demoModel */
   updateDemoModel?: Maybe<DemoModel>;
+  /**
+   * Update many appUsers
+   * @deprecated Please use the new paginated many mutation (updateManyAppUsersConnection)
+   */
+  updateManyAppUsers: BatchPayload;
+  /** Update many AppUser documents */
+  updateManyAppUsersConnection: AppUserConnection;
   /**
    * Update many assets
    * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
@@ -1645,12 +2043,19 @@ export type Mutation = {
   updateProduct?: Maybe<Product>;
   /** Update one scheduledRelease */
   updateScheduledRelease?: Maybe<ScheduledRelease>;
+  /** Upsert one appUser */
+  upsertAppUser?: Maybe<AppUser>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
   /** Upsert one demoModel */
   upsertDemoModel?: Maybe<DemoModel>;
   /** Upsert one product */
   upsertProduct?: Maybe<Product>;
+};
+
+
+export type MutationCreateAppUserArgs = {
+  data: AppUserCreateInput;
 };
 
 
@@ -1674,6 +2079,11 @@ export type MutationCreateScheduledReleaseArgs = {
 };
 
 
+export type MutationDeleteAppUserArgs = {
+  where: AppUserWhereUniqueInput;
+};
+
+
 export type MutationDeleteAssetArgs = {
   where: AssetWhereUniqueInput;
 };
@@ -1681,6 +2091,21 @@ export type MutationDeleteAssetArgs = {
 
 export type MutationDeleteDemoModelArgs = {
   where: DemoModelWhereUniqueInput;
+};
+
+
+export type MutationDeleteManyAppUsersArgs = {
+  where?: InputMaybe<AppUserManyWhereInput>;
+};
+
+
+export type MutationDeleteManyAppUsersConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<AppUserManyWhereInput>;
 };
 
 
@@ -1744,6 +2169,12 @@ export type MutationDeleteScheduledReleaseArgs = {
 };
 
 
+export type MutationPublishAppUserArgs = {
+  to?: Array<Stage>;
+  where: AppUserWhereUniqueInput;
+};
+
+
 export type MutationPublishAssetArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1756,6 +2187,24 @@ export type MutationPublishAssetArgs = {
 export type MutationPublishDemoModelArgs = {
   to?: Array<Stage>;
   where: DemoModelWhereUniqueInput;
+};
+
+
+export type MutationPublishManyAppUsersArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<AppUserManyWhereInput>;
+};
+
+
+export type MutationPublishManyAppUsersConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<AppUserManyWhereInput>;
 };
 
 
@@ -1825,6 +2274,14 @@ export type MutationPublishProductArgs = {
 };
 
 
+export type MutationSchedulePublishAppUserArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  to?: Array<Stage>;
+  where: AppUserWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishAssetArgs = {
   locales?: InputMaybe<Array<Locale>>;
   publishBase?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1849,6 +2306,14 @@ export type MutationSchedulePublishProductArgs = {
   releaseId?: InputMaybe<Scalars['String']['input']>;
   to?: Array<Stage>;
   where: ProductWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishAppUserArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']['input']>;
+  releaseId?: InputMaybe<Scalars['String']['input']>;
+  where: AppUserWhereUniqueInput;
 };
 
 
@@ -1878,6 +2343,12 @@ export type MutationScheduleUnpublishProductArgs = {
 };
 
 
+export type MutationUnpublishAppUserArgs = {
+  from?: Array<Stage>;
+  where: AppUserWhereUniqueInput;
+};
+
+
 export type MutationUnpublishAssetArgs = {
   from?: Array<Stage>;
   locales?: InputMaybe<Array<Locale>>;
@@ -1889,6 +2360,24 @@ export type MutationUnpublishAssetArgs = {
 export type MutationUnpublishDemoModelArgs = {
   from?: Array<Stage>;
   where: DemoModelWhereUniqueInput;
+};
+
+
+export type MutationUnpublishManyAppUsersArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<AppUserManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyAppUsersConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<AppUserManyWhereInput>;
 };
 
 
@@ -1956,6 +2445,12 @@ export type MutationUnpublishProductArgs = {
 };
 
 
+export type MutationUpdateAppUserArgs = {
+  data: AppUserUpdateInput;
+  where: AppUserWhereUniqueInput;
+};
+
+
 export type MutationUpdateAssetArgs = {
   data: AssetUpdateInput;
   where: AssetWhereUniqueInput;
@@ -1965,6 +2460,23 @@ export type MutationUpdateAssetArgs = {
 export type MutationUpdateDemoModelArgs = {
   data: DemoModelUpdateInput;
   where: DemoModelWhereUniqueInput;
+};
+
+
+export type MutationUpdateManyAppUsersArgs = {
+  data: AppUserUpdateManyInput;
+  where?: InputMaybe<AppUserManyWhereInput>;
+};
+
+
+export type MutationUpdateManyAppUsersConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']['input']>;
+  before?: InputMaybe<Scalars['ID']['input']>;
+  data: AppUserUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<AppUserManyWhereInput>;
 };
 
 
@@ -2028,6 +2540,12 @@ export type MutationUpdateProductArgs = {
 export type MutationUpdateScheduledReleaseArgs = {
   data: ScheduledReleaseUpdateInput;
   where: ScheduledReleaseWhereUniqueInput;
+};
+
+
+export type MutationUpsertAppUserArgs = {
+  upsert: AppUserUpsertInput;
+  where: AppUserWhereUniqueInput;
 };
 
 
@@ -2678,6 +3196,14 @@ export type PublishLocaleInput = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Retrieve a single appUser */
+  appUser?: Maybe<AppUser>;
+  /** Retrieve document version */
+  appUserVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple appUsers */
+  appUsers: Array<AppUser>;
+  /** Retrieve multiple appUsers using the Relay connection interface */
+  appUsersConnection: AppUserConnection;
   /** Retrieve a single asset */
   asset?: Maybe<Asset>;
   /** Retrieve document version */
@@ -2686,12 +3212,6 @@ export type Query = {
   assets: Array<Asset>;
   /** Retrieve multiple assets using the Relay connection interface */
   assetsConnection: AssetConnection;
-  /** Get a specific character by ID */
-  character?: Maybe<Character>;
-  /** Get the list of all characters */
-  characters?: Maybe<Characters>;
-  /** Get a list of characters selected by ids */
-  charactersByIds?: Maybe<Array<Maybe<Character>>>;
   /** Retrieve a single demoModel */
   demoModel?: Maybe<DemoModel>;
   /** Retrieve document version */
@@ -2700,18 +3220,6 @@ export type Query = {
   demoModels: Array<DemoModel>;
   /** Retrieve multiple demoModels using the Relay connection interface */
   demoModelsConnection: DemoModelConnection;
-  /** Get a specific episode by ID */
-  episode?: Maybe<Episode>;
-  /** Get the list of all episodes */
-  episodes?: Maybe<Episodes>;
-  /** Get a list of episodes selected by ids */
-  episodesByIds?: Maybe<Array<Maybe<Episode>>>;
-  /** Get a specific locations by ID */
-  location?: Maybe<Location>;
-  /** Get the list of all locations */
-  locations?: Maybe<Locations>;
-  /** Get a list of locations selected by ids */
-  locationsByIds?: Maybe<Array<Maybe<Location>>>;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single product */
@@ -2740,6 +3248,44 @@ export type Query = {
   users: Array<User>;
   /** Retrieve multiple users using the Relay connection interface */
   usersConnection: UserConnection;
+};
+
+
+export type QueryAppUserArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: AppUserWhereUniqueInput;
+};
+
+
+export type QueryAppUserVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryAppUsersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<AppUserOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<AppUserWhereInput>;
+};
+
+
+export type QueryAppUsersConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<AppUserOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  stage?: Stage;
+  where?: InputMaybe<AppUserWhereInput>;
 };
 
 
@@ -2781,22 +3327,6 @@ export type QueryAssetsConnectionArgs = {
 };
 
 
-export type QueryCharacterArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryCharactersArgs = {
-  filter?: InputMaybe<FilterCharacter>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type QueryCharactersByIdsArgs = {
-  ids: Array<Scalars['ID']['input']>;
-};
-
-
 export type QueryDemoModelArgs = {
   locales?: Array<Locale>;
   stage?: Stage;
@@ -2832,38 +3362,6 @@ export type QueryDemoModelsConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   stage?: Stage;
   where?: InputMaybe<DemoModelWhereInput>;
-};
-
-
-export type QueryEpisodeArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryEpisodesArgs = {
-  filter?: InputMaybe<FilterEpisode>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type QueryEpisodesByIdsArgs = {
-  ids: Array<Scalars['ID']['input']>;
-};
-
-
-export type QueryLocationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryLocationsArgs = {
-  filter?: InputMaybe<FilterLocation>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type QueryLocationsByIdsArgs = {
-  ids: Array<Scalars['ID']['input']>;
 };
 
 
@@ -3122,7 +3620,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | DemoModel | Product;
+export type ScheduledOperationAffectedDocument = AppUser | Asset | DemoModel | Product;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -4569,95 +5067,43 @@ export enum _SystemDateTimeFieldVariation {
 }
 
 
-export const CharacterDocument = gql`
-    query Character($id: ID!) {
-  character(id: $id) {
+export const GetAppUserDocument = gql`
+    query GetAppUser($email: String!) {
+  appUser(where: {email: $email}, stage: DRAFT) {
     id
-    image
-    name
-    gender
-    species
-    origin {
-      dimension
-      id
-    }
+    email
+    password
   }
 }
     `;
 
 /**
- * __useCharacterQuery__
+ * __useGetAppUserQuery__
  *
- * To run a query within a React component, call `useCharacterQuery` and pass it any options that fit your needs.
- * When your component renders, `useCharacterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAppUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAppUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCharacterQuery({
+ * const { data, loading, error } = useGetAppUserQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      email: // value for 'email'
  *   },
  * });
  */
-export function useCharacterQuery(baseOptions: Apollo.QueryHookOptions<CharacterQuery, CharacterQueryVariables>) {
+export function useGetAppUserQuery(baseOptions: Apollo.QueryHookOptions<GetAppUserQuery, GetAppUserQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CharacterQuery, CharacterQueryVariables>(CharacterDocument, options);
+        return Apollo.useQuery<GetAppUserQuery, GetAppUserQueryVariables>(GetAppUserDocument, options);
       }
-export function useCharacterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharacterQuery, CharacterQueryVariables>) {
+export function useGetAppUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppUserQuery, GetAppUserQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CharacterQuery, CharacterQueryVariables>(CharacterDocument, options);
+          return Apollo.useLazyQuery<GetAppUserQuery, GetAppUserQueryVariables>(GetAppUserDocument, options);
         }
-export type CharacterQueryHookResult = ReturnType<typeof useCharacterQuery>;
-export type CharacterLazyQueryHookResult = ReturnType<typeof useCharacterLazyQuery>;
-export type CharacterQueryResult = Apollo.QueryResult<CharacterQuery, CharacterQueryVariables>;
-export const CharactersDocument = gql`
-    query Characters($page: Int, $filter: FilterCharacter) {
-  characters(page: $page, filter: $filter) {
-    results {
-      id
-      name
-      image
-    }
-    info {
-      count
-      pages
-      next
-      prev
-    }
-  }
-}
-    `;
-
-/**
- * __useCharactersQuery__
- *
- * To run a query within a React component, call `useCharactersQuery` and pass it any options that fit your needs.
- * When your component renders, `useCharactersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCharactersQuery({
- *   variables: {
- *      page: // value for 'page'
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useCharactersQuery(baseOptions?: Apollo.QueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
-      }
-export function useCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
-        }
-export type CharactersQueryHookResult = ReturnType<typeof useCharactersQuery>;
-export type CharactersLazyQueryHookResult = ReturnType<typeof useCharactersLazyQuery>;
-export type CharactersQueryResult = Apollo.QueryResult<CharactersQuery, CharactersQueryVariables>;
+export type GetAppUserQueryHookResult = ReturnType<typeof useGetAppUserQuery>;
+export type GetAppUserLazyQueryHookResult = ReturnType<typeof useGetAppUserLazyQuery>;
+export type GetAppUserQueryResult = Apollo.QueryResult<GetAppUserQuery, GetAppUserQueryVariables>;
 export const GetProductListDocument = gql`
     query GetProductList {
   products {
@@ -4737,20 +5183,48 @@ export function useGetProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetProductByIdQueryHookResult = ReturnType<typeof useGetProductByIdQuery>;
 export type GetProductByIdLazyQueryHookResult = ReturnType<typeof useGetProductByIdLazyQuery>;
 export type GetProductByIdQueryResult = Apollo.QueryResult<GetProductByIdQuery, GetProductByIdQueryVariables>;
-export type CharacterQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+export const RegisterDocument = gql`
+    mutation Register($email: String!, $password: String!) {
+  createAppUser(data: {email: $email, password: $password}) {
+    id
+    email
+    password
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export type GetAppUserQueryVariables = Exact<{
+  email: Scalars['String']['input'];
 }>;
 
 
-export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, image?: string | null, name?: string | null, gender?: string | null, species?: string | null, origin?: { __typename?: 'Location', dimension?: string | null, id?: string | null } | null } | null };
-
-export type CharactersQueryVariables = Exact<{
-  page?: InputMaybe<Scalars['Int']['input']>;
-  filter?: InputMaybe<FilterCharacter>;
-}>;
-
-
-export type CharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, image?: string | null } | null> | null, info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null } | null };
+export type GetAppUserQuery = { __typename?: 'Query', appUser?: { __typename?: 'AppUser', id: string, email: string, password: string } | null };
 
 export type GetProductListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4763,3 +5237,11 @@ export type GetProductByIdQueryVariables = Exact<{
 
 
 export type GetProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, description?: string | null, slug?: string | null, title: string, price?: number | null, imageUrl?: string | null } | null };
+
+export type RegisterMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', createAppUser?: { __typename?: 'AppUser', id: string, email: string, password: string } | null };

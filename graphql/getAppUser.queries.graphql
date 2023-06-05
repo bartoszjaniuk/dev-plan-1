@@ -1,0 +1,7 @@
+query GetAppUser($email: String!) {
+  appUser(where: { email: $email }, stage: DRAFT) {
+    id
+    email
+    password
+  }
+}
