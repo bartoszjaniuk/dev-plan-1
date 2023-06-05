@@ -23,3 +23,13 @@ MR 2 |02.06.2023 - STRUKTURA PAGES
 7. Utworzenie podstawowych customowych error page'ow (404, 500)
 8. Uzycie podstawowego hook'a useRouter
 9. Dodanie error-boundary
+
+MR 3 |05.06.2023 - STRUKTURA PAGES
+
+1. Instalacja oraz konfiguracja next-auth
+2. Implementacja logowania oraz rejestracji uzytkownika (hygraph)
+3. Wykorzystanie api routes
+4. Dostosowanie nawigacji pod sesję (przyciski logowania, rejestacji)
+5. Optymalizacja: uzycie Lazy Loading na stronie Home
+6. Skorzystanie z wbudowanego komponentu next/head w celu umieszczenia tagów SEO
+7. Instalacja paczki next-seo, która usprawnia ustawianie metatagów pod SEO.

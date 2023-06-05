@@ -2,8 +2,13 @@ import Link from "next/link";
 import React from "react";
 import { AppPaths, AppRoutes } from "./Nav.consts";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const Nav = () => {
+  const { status } = useSession();
+  const { push } = useRouter();
+
   return (
     <header className="h-20 fixed w-full z-50">
       <div className="flex justify-between items-center h-full px-[10vw] bg-layout text-fontLight">
@@ -28,6 +33,32 @@ export const Nav = () => {
             ))}
           </ul>
         </nav>
+        <div className="flex gap-4">
+          {status === "authenticated" && (
+            <button
+              className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => signOut()}
+            >
+              Wyloguj
+            </button>
+          )}
+          {status !== "authenticated" && (
+            <>
+              <button
+                className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => push("api/auth/signin")}
+              >
+                Logowanie
+              </button>
+              <button
+                className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => push("/register")}
+              >
+                Rejestracja
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );
